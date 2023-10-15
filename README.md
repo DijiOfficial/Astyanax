@@ -82,11 +82,11 @@ Drops are Pre-Generated in the [First Level](#first-level) and are represented b
 
 #### Strength
 
-The Strengh upgrade will give an additional 5 strength points. Starting at 5 Strength points your character can have up to 20 maximum strenght points.
+The Strength upgrade will give an additional 5 strength points. Starting at 5 Strength points your character can have up to 20 maximum strength points.
 
 #### Swing Speed
 
-The Swing Speed upgrade originally shortened the cooldwon between swings (according to the manual) which is completly useless since you could already swing fast enough to deal 0 damage. So instead it replenishes the strenght points faster. (There is currently no stop to how fast you can replenish)
+The Swing Speed upgrade originally shortened the cooldwon between swings (according to the manual) which is completely useless since you could already swing fast enough to deal 0 damage. So instead it replenishes the strength points faster. (There is currently no stop to how fast you can replenish)
 
 #### Potions
 
@@ -106,7 +106,7 @@ I recently added the Pause Menu which features a scoreboard Option. So next up I
 
 But Before I can add the ScoreBoard Players need the ability to finish the Game (duh), So First off will be the addition of the long awaited FINAL BOSS OF THE LEVEL 1!!!! (dun-dun-dun)
 
-Finally I noticed I forgor to put the default strenght back to 5 so that will need yo be fixed as well.
+Finally I noticed I forgor to put the default strength back to 5 so that will need to be fixed as well.
 
 There is also a list of known bugs which I may or may not tackle:
 - Switching between Spells when Casting one may cause unwanted visual effects
