@@ -25,7 +25,7 @@ In the original version you can [drop](#drops) (more on those later) a weapon mo
 
 I changed this mechanic as to provide a more diverse gameplay experience. At the beginning you have the option of choosing between the three weapons and their effects have been altered slightly as having anything other than the Sword in the original is weaker.
 
-![original weapon effects](Resources/Weapons%20Effectiveness.PNG)
+![original weapon effects](Resources/WeaponsEffectiveness.PNG)
 
 Now, what does this table mean? You have two ways of dealing damage, physical and magical. Physical damage is simple, hit the [ennemies](#ennemies) with your [Weapon](#weapons), the damage dealt is calculated based on your current Strength * Physical Damage multiplier of your [Weapon](#weapons). Your current Strength is indicated by the yellow bar in the HUD. When you attack you have cooldown period during which your strength regenerates, attacking again when your strength is not at max will result in lower damage output.
 
