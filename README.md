@@ -35,7 +35,7 @@ To deal magical damage you first need to choose your [Spell](#spells) using "w" 
 
 ### Spells
 
-Now that you are versed in how to effectively murder the [ennemies](#ennemies), which Spells are available? You currently hace three spells available ![Powers](Resources/Powers.png) the [Fireball](#fireball), the [Time Freeze](#time-freeze) and the [Lightning Bolt](#lightning-bolt). You can switch between them using "w" and cast them using "c".
+Now that you are versed in how to effectively murder the [ennemies](#ennemies), which Spells are available? You currently have three spells available ![Powers](Resources/Powers.png) the [Lightning Bolt](#lightning-bolt), the [Fireball](#fireball) and the [Time Freeze](#time-freeze) respectively. You can switch between them using "w" and cast them using "c".
 
 The selected Spell will be shown by an icon in the bottom left corner of the HUD.
 
