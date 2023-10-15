@@ -31,11 +31,11 @@ I changed this mechanic as to provide a more diverse gameplay experience. At the
 
 Now, what does this table mean? You have two ways of dealing damage, physical and magical. Physical damage is simple, hit the [ennemies](#ennemies) with your [Weapon](#weapons), the damage dealt is calculated based on your current Strength * Physical Damage multiplier of your [Weapon](#weapons). Your current Strength is indicated by the yellow bar in the HUD. When you attack you have cooldown period during which your strength regenerates, attacking again when your strength is not at max will result in lower damage output.
 
-To deal magical damage you first need to choose your [Spell](#spells) using "w" to switch Spell, the default one is the [Fireball](#fireball). Press "z" to cast a Spell, once again the damage dealt is calculated as follow: current Spell base damage * Spell damage multiplier of your [Weapon](#weapons). When you Cast a Spell you consume "Mana" starting with 20 points the Mana consumption is calculated as follow: Spell base mana cost * Spell cost multiplier of your [Weapon](#weapons).
+To deal magical damage you first need to choose your [Spell](#spells) using "w" to switch Spell, the default one is the [Fireball](#fireball). Press "c" to cast a Spell, once again the damage dealt is calculated as follow: current Spell base damage * Spell damage multiplier of your [Weapon](#weapons). When you Cast a Spell you consume "Mana" starting with 20 points the Mana consumption is calculated as follow: Spell base mana cost * Spell cost multiplier of your [Weapon](#weapons).
 
 ### Spells
 
-Now that you are versed in how to effectively murder the [ennemies](#ennemies), which Spells are available? You currently hace three spells available ![Powers](Resources/Powers.png) the [Fireball](#fireball), the [Time Freeze](#time-freeze) and the [Lightning Bolt](#lightning-bolt). You can switch between them using "z" and cast them using "c".
+Now that you are versed in how to effectively murder the [ennemies](#ennemies), which Spells are available? You currently hace three spells available ![Powers](Resources/Powers.png) the [Fireball](#fireball), the [Time Freeze](#time-freeze) and the [Lightning Bolt](#lightning-bolt). You can switch between them using "w" and cast them using "c".
 
 The selected Spell will be shown by an icon in the bottom left corner of the HUD.
 
