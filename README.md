@@ -43,7 +43,7 @@ The selected Spell will be shown by an icon in the bottom left corner of the HUD
 
 The Fireball ![fireball](Resources/fireball.png) is the default Spell when you start 
 
-It's characteristics are as follow:
+Its characteristics are as follow:
  - Base Damage of 25
  - Base Mana cost of 3
  - Shoots 8 FireBalls in a circle around the player
@@ -54,7 +54,7 @@ It's characteristics are as follow:
 
 The Time Freeze freezes everything for a couple of seconds.
 
-It's characteristics are as follow:
+Its characteristics are as follow:
  - Base Damage of 0
  - Base Mana cost of 1
  - Freezes everything except the player
@@ -66,7 +66,7 @@ It's characteristics are as follow:
 
 The Lightning Bolt last but not least is the most powerfull Spell but also the more costly choice.
 
-It's characteristics are as follow:
+Its characteristics are as follow:
  - Base Damage of 45
  - Base Mana cost of 5
  - Obliterates everything except the player
