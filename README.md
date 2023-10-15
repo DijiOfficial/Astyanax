@@ -20,7 +20,7 @@ This game is a close replica of the Original Game Astyanax made for the Arcade a
 
 You will be playing as Astyanax the hero of this [Story](https://en.wikipedia.org/wiki/The_Astyanax), who is kidnapped by a fairy and transported to another dimension where he has to face the evil wizard Blackhorn and his armies who kidnapped the princess, the only person who can send him back to his world. 
 
-In the original version you can [drop](#drops) (more on those later) a weapon mod which will automatically change your weapon to the next in the list of three. The Axe, Spear and Sword. And the only way to change weapon is to meet Cutie the fairy who kidnapped you or drop another wepon mod. See weapon effects bellow:
+In the original version you can [drop](#drops) (more on those later) a weapon mod which will automatically change your weapon to the next in the list of three. The Axe, Spear and Sword. And the only way to change weapon is to meet Cutie the fairy who kidnapped you or drop another weapon mod. See weapon effects bellow:
 
 ### Weapons
 ![original weapon effects](Resources/originalEffectivness.png)
