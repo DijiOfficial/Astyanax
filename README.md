@@ -33,15 +33,13 @@ To deal magical damage you first need to choose your [Spell](#spells) using "w" 
 
 ### Spells
 
-Now that you are versed in how to effectively murder the [ennemies](#ennemies), which Spells are available? You currently hace three spells available the [Fireball](#fireball), the [Time Freeze](#time-freeze) and the [Lightning Bolt](#lightning-bolt). You can switch between them using "z" and cast them using "c".
-
-![Powers](Resources/Powers.png)
+Now that you are versed in how to effectively murder the [ennemies](#ennemies), which Spells are available? You currently hace three spells available ![Powers](Resources/Powers.png) the [Fireball](#fireball), the [Time Freeze](#time-freeze) and the [Lightning Bolt](#lightning-bolt). You can switch between them using "z" and cast them using "c".
 
 The selected Spell will be shown by an icon in the bottom left corner of the HUD.
 
 #### Fireball
 
-The Fireball is the default Spell when you start ![fireball](Resources/fireball.png)
+The Fireball ![fireball](Resources/fireball.png) is the default Spell when you start 
 
 It's characteristics are as follow:
  - Base Damage of 25
@@ -76,6 +74,19 @@ It's characteristics are as follow:
 
 You have already heard about the weapon mod drop from the [Core Mechanics](#core-mechanics) section, but what is it? It's origninally one of Five [Drops](#drops), which I removed in my version for a more diverse gameplay option.
 
-The remaining 4 drops are the [Strength](#strength) upgrade, the [Swing Speed](#swing-speed) upgrade, the [Health](#health-potion) potion and the [Mana](#mana-potion) Potion. ![Drops](Resources/PickUpsFinal.png)
+The remaining 4 drops ![Drops](Resources/PickUpsFinal.png) are the [Strength](#strength) upgrade, the [Swing Speed](#swing-speed) upgrade, the [Health Potion](#potions) and the [Mana Potion](#potions). 
 
-Drops are Pre-Generated in the [First Level](#first-level) and are represented by standing statues ![Statue](Resources/statue.png)
+Drops are Pre-Generated in the [First Level](#first-level) and are represented by standing statues ![Statue](Resources/statue.png), when you break a statue one of the four drops will be "randomly" chosen. The "randomness" was tweaked to allow probabilities to influence the drop, in other words the more you need a health or mana potion the more likely you are to drop one where has if you have max health and mana you are guarenteed to drop one of the other two.
+
+#### Strength
+
+The Strengh upgrade will give an additional 5 strength points. Starting at 5 Strength points your character can have up to 20 maximum strenght points.
+
+#### Swing Speed
+
+The Swing Speed upgrade originally shortened the cooldwon between swings (according to the manual) which is completly useless since you could already swing fast enough to deal 0 damage. So instead it replenishes the strenght points faster. (There is currently no stop to how fast you can replenish)
+
+#### Potions
+
+The Health and Mana Potions are pretty self explanatory they will fully replenish your health or mana bar. 
+
