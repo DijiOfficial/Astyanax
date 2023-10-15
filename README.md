@@ -4,7 +4,7 @@ This project is my first Solo game that I made in C++ based on the Game [Astyana
 ## Version 1.1
 You can play it [here](https://github.com/DijiOfficial/Astyanax/releases/tag/v1.1) by downloading the .rar file.
 
-You can also check out the [What's comming Section!](#what-is-comming)
+You can also check out the [What's Next Section!](#what-is-next)
 
 Press "i" or "esc" for the controls and enjoy!
 
