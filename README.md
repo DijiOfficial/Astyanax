@@ -14,7 +14,7 @@ Press "i" or "esc" for the controls and enjoy!
 
 ## Astynax The Game
 
-This game is a close replica of the Original Game Astyanax made for the Arcade and later NES, with a small modifications.
+This game is a close replica of the Original Game Astyanax made for the Arcade and later NES, with small modifications.
 
 ## Core Mechanics
 
