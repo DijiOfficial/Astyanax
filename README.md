@@ -21,7 +21,7 @@ You will be playing as Astyanax the hero of this [Story](https://en.wikipedia.or
 In the original version you can [drop](#drops) (more on those later) a weapon mod which will automatically change your weapon to the next in the list of three. The Axe, Spear and Sword. And the only way to change weapon is to meet Cutie the fairy who kidnapped you or drop another wepon mod. See weapon effects bellow:
 
 #### Weapons
-![original weapon effects](Resources/OriginalEffectivness.png)
+![original weapon effects](Resources/originalEffectivness.png)
 
 I changed this mechanic as to provide a more diverse gameplay experience. At the beginning you have the option of choosing between the three weapons and their effects have been altered slightly as having anything other than the Sword in the original is weaker.
 
