@@ -78,7 +78,7 @@ You have already heard about the weapon mod drop from the [Core Mechanics](#core
 
 The remaining 4 drops ![Drops](Resources/PickUpsFinal.png) are the [Strength](#strength) upgrade, the [Swing Speed](#swing-speed) upgrade, the [Health Potion](#potions) and the [Mana Potion](#potions). 
 
-Drops are Pre-Generated in the [First Level](#first-level) and are represented by standing statues ![Statue](Resources/statue.png), when you break a statue one of the four drops will be "randomly" chosen. The "randomness" was tweaked to allow probabilities to influence the drop, in other words the more you need a health or mana potion the more likely you are to drop one where has if you have max health and mana you are guarenteed to drop one of the other two.
+Drops are Pre-Generated in the [First Level](#first-level) and are represented by standing statues ![Statue](Resources/statue.png), when you break a statue one of the four drops will be "randomly" chosen. The "randomness" was tweaked to allow probabilities to influence the drop, in other words the more you need a health or mana potion the more likely you are to drop one where as if you have max health and mana you are guaranteed to drop one of the other two.
 
 #### Strength
 
