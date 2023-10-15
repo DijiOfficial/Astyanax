@@ -1,5 +1,5 @@
 # Astyanax
-This project is my first Solo game that I made in C++ based on the Game [Astyanax](https://en.wikipedia.org/wiki/The_Astyanax). See about my [version below](##-Core_Mechanics)
+This project is my first Solo game that I made in C++ based on the Game [Astyanax](https://en.wikipedia.org/wiki/The_Astyanax). See about my [version below](##core-mechanics)
 
 ## Version 1.1
 You can play it [here](https://github.com/DijiOfficial/Astyanax/releases/tag/v1.1) by downloading the .rar file.
