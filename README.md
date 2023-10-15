@@ -4,6 +4,8 @@ This project is my first Solo game that I made in C++ based on the Game [Astyana
 ## Version 1.1
 You can play it [here](https://github.com/DijiOfficial/Astyanax/releases/tag/v1.1) by downloading the .rar file.
 
+You can also check out the [What's comming Section!](#what-is-comming)
+
 Press "i" or "esc" for the controls and enjoy!
 
 ![menu reference](Resources/menu.png)
@@ -90,3 +92,27 @@ The Swing Speed upgrade originally shortened the cooldwon between swings (accord
 
 The Health and Mana Potions are pretty self explanatory they will fully replenish your health or mana bar. 
 
+### Ennemies
+
+(section is comming)
+
+### First Level
+
+(Section is comming)
+
+## What is Next?
+
+I recently added the Pause Menu which features a scoreboard Option. So next up Is Adding A SCOREBOARD! Which will keep track of the highscores and automatically replace and rank them!
+
+But Before I can add the ScoreBoard Players need the ability to finish the Game (duh), So First off will be the addition of the long awaited FINAL BOSS OF THE LEVEL 1!!!! (dun-dun-dun)
+
+Finally I noticed I forgor to put the default strenght back to 5 so that will need yo be fixed as well.
+
+There is also a list of known bugs which I may or may not tackle:
+- Switching between Spells when Casting one may cause unwanted visual effects
+- During Invincibility Frames the avatar sprite can switche weapons
+- During Invincibility Frames the avatar with the Sword is cropped wrong when moving backwards on the X axis
+- When Reseting the Enemies are not reset
+- When Reseting the Game can Crash (not yet known why)
+
+There is also a lot of erronous and 'bad' code that could be replaced, which I will likely never do, but instead port the game to a new engine with proper code (OMG ASTYNAX v2.0 coming Soon?)
