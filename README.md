@@ -14,24 +14,24 @@ Press "i" or "esc" for the controls and enjoy!
 
 This game is a close replica of the Original Game Astyanax made for the Arcade and later NES, with a small modifications.
 
-### Core Mechanics
+## Core Mechanics
 
 You will be playing as Astyanax the hero of this [Story](https://en.wikipedia.org/wiki/The_Astyanax), who is kidnapped by a fairy and transported to another dimension where he has to face the evil wizard Blackhorn and his armies who kidnapped the princess, the only person who can send him back to his world. 
 
 In the original version you can [drop](#drops) (more on those later) a weapon mod which will automatically change your weapon to the next in the list of three. The Axe, Spear and Sword. And the only way to change weapon is to meet Cutie the fairy who kidnapped you or drop another wepon mod. See weapon effects bellow:
 
-#### Weapons
+### Weapons
 ![original weapon effects](Resources/originalEffectivness.png)
 
 I changed this mechanic as to provide a more diverse gameplay experience. At the beginning you have the option of choosing between the three weapons and their effects have been altered slightly as having anything other than the Sword in the original is weaker.
 
-![original weapon effects](Resources/Weapons\Effectiveness.PNG)
+![original weapon effects](Resources/Weapons%20Effectiveness.PNG)
 
 Now, what does this table mean? You have two ways of dealing damage, physical and magical. Physical damage is simple, hit the [ennemies](#ennemies) with your [Weapon](#weapons), the damage dealt is calculated based on your current Strength * Physical Damage multiplier of your [Weapon](#weapons). Your current Strength is indicated by the yellow bar in the HUD. When you attack you have cooldown period during which your strength regenerates, attacking again when your strength is not at max will result in lower damage output.
 
 To deal magical damage you first need to choose your [Spell](#spells) using "w" to switch Spell, the default one is the [Fireball](#fireball). Press "z" to cast a Spell, once again the damage dealt is calculated as follow: current Spell base damage * Spell damage multiplier of your [Weapon](#weapons). When you Cast a Spell you consume "Mana" starting with 20 points the Mana consumption is calculated as follow: Spell base mana cost * Spell cost multiplier of your [Weapon](#weapons).
 
-#### Spells
+### Spells
 
 Now that you are versed in how to effectively murder the [ennemies](#ennemies), which Spells are available? You currently hace three spells available the [Fireball](#fireball), the [Time Freeze](#time-freeze) and the [Lightning Bolt](#lightning-bolt). You can switch between them using "z" and cast them using "c".
 
@@ -39,7 +39,7 @@ Now that you are versed in how to effectively murder the [ennemies](#ennemies), 
 
 The selected Spell will be shown by an icon in the bottom left corner of the HUD.
 
-##### Fireball
+#### Fireball
 
 The Fireball is the default Spell when you start ![fireball](Resources/fireball.png)
 
@@ -50,7 +50,7 @@ It's characteristics are as follow:
  - Each FireBall can deal damage but will be consummed after a hit
  - Effective in overwhelming situation
 
-##### Time Freeze
+#### Time Freeze
 
 The Time Freeze freezes everything for a couple of seconds.
 
@@ -62,7 +62,7 @@ It's characteristics are as follow:
  - Frozen projectiles won't deal damage and can be destroyed with physical attacks
  - Effective with the Spear [Weapon](#weapons) to run past the [ennemies](#ennemies)
 
-##### Lightning Bolt
+#### Lightning Bolt
 
 The Lightning Bolt last but not least is the most powerfull Spell but also the more costly choice.
 
@@ -72,7 +72,7 @@ It's characteristics are as follow:
  - Obliterates everything except the player
  - Always Effective
 
-#### Drops
+### Drops
 
 You have already heard about the weapon mod drop from the [Core Mechanics](#core-mechanics) section, but what is it? It's origninally one of Five [Drops](#drops), which I removed in my version for a more diverse gameplay option.
 
