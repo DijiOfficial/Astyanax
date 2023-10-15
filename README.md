@@ -6,7 +6,7 @@ You can play it [here](https://github.com/DijiOfficial/Astyanax/releases/tag/v1.
 
 Press "i" or "esc" for the controls and enjoy!
 
-![menu reference](Resources/PickUpsFinal.png)
+![menu reference](Resources/menu.png)
 ![gameplay reference](Resources/gameplay.png)
 ![gameplay reference](Resources/gameplay2.png)
 
@@ -41,9 +41,7 @@ The selected Spell will be shown by an icon in the bottom left corner of the HUD
 
 ##### Fireball
 
-The Fireball is the default Spell when you start:
-
-![fireball](Resources/fireball.png)
+The Fireball is the default Spell when you start ![fireball](Resources/fireball.png)
 
 It's characteristics are as follow:
  - Base Damage of 25
@@ -78,8 +76,6 @@ It's characteristics are as follow:
 
 You have already heard about the weapon mod drop from the [Core Mechanics](###-Core-Mechanics) section, but what is it? It's origninally one of Five [Drops](####-Drops), which I removed in my version for a more diverse gameplay option.
 
-The remaining 4 drops are the [Strength](#####-Strength) upgrade, the [Swing Speed](#####-Swing-Speed) upgrade, the [Health](#####-Health-Potion) potion and the [Mana](#####-Mana-Potion) Potion.
-![Drops](Resources/PickUpsFinal.png)
+The remaining 4 drops are the [Strength](#####-Strength) upgrade, the [Swing Speed](#####-Swing-Speed) upgrade, the [Health](#####-Health-Potion) potion and the [Mana](#####-Mana-Potion) Potion. ![Drops](Resources/PickUpsFinal.png)
 
-Drops are Pre-Generated in the [First Level](###-First-Level) and are represented by standing statues: 
-![Statue](Resources/statue.png)
+Drops are Pre-Generated in the [First Level](###-First-Level) and are represented by standing statues ![Statue](Resources/statue.png)
