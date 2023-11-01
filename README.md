@@ -109,6 +109,7 @@ But Before I can add the ScoreBoard Players need the ability to finish the Game 
 Finally I noticed I forgor to put the default strength back to 5 so that will need to be fixed as well.
 
 There is also a list of known bugs which I may or may not tackle:
+- I accidently replaced the manu background, will be fixed in the next update
 - Switching between Spells when Casting one may cause unwanted visual effects
 - During Invincibility Frames the avatar sprite can switche weapons
 - During Invincibility Frames the avatar with the Sword is cropped wrong when moving backwards on the X axis
