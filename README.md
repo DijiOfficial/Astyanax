@@ -1,8 +1,8 @@
 # Astyanax
 This project is my first Solo game that I made in C++ based on the Game [Astyanax](https://en.wikipedia.org/wiki/The_Astyanax). See about my [version below](#astynax-the-game)
 
-## Version 1.1
-You can play it [here](https://github.com/DijiOfficial/Astyanax/releases/tag/v1.1) by downloading the .rar file.
+## Version 1.2
+You can play it [here](https://github.com/DijiOfficial/Astyanax/releases/tag/v1.2) by downloading the .rar file.
 
 You can also check out the [What's Next Section!](#what-is-next)
 
@@ -101,19 +101,22 @@ The Health and Mana Potions are pretty self explanatory they will fully replenis
 (Section is comming)
 
 ## What is Next?
-
-I recently added the Pause Menu which features a scoreboard Option. So next up Is Adding A SCOREBOARD! Which will keep track of the highscores and automatically replace and rank them!
-
-But Before I can add the ScoreBoard Players need the ability to finish the Game (duh), So First off will be the addition of the long awaited FINAL BOSS OF THE LEVEL 1!!!! (dun-dun-dun)
-
-Finally I noticed I forgor to put the default strength back to 5 so that will need to be fixed as well.
+Well the First level is finally over and every mechanic/features have been implemented. Potential features for future updates include a difficulty option and more levels.
 
 There is also a list of known bugs which I may or may not tackle:
-- I accidently replaced the manu background, will be fixed in the next update
 - Switching between Spells when Casting one may cause unwanted visual effects
 - During Invincibility Frames the avatar sprite can switche weapons
 - During Invincibility Frames the avatar with the Sword is cropped wrong when moving backwards on the X axis
-- When Reseting the Enemies are not reset
-- When Reseting the Game can Crash (not yet known why)
 
 There is also a lot of erronous and 'bad' code that could be replaced, which I will likely never do, but instead port the game to a new engine with proper code (OMG ASTYNAX v2.0 coming Soon?)
+
+## Astyanax v1.2
+
+### Features:
+- Added Scoreboard
+- Added Level 1 Boss
+  
+### Bug Fixes
+- Fixed Menu screen
+- Fixed Strength
+- Fixed reset bugs and reset crashes
