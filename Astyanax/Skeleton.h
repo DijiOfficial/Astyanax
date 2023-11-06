@@ -18,4 +18,3 @@ private:
 	ActionState m_ActionState;
 	void UpdateFrames(float elapsedSec) override;
 };
-

@@ -14,6 +14,9 @@
 #include "FirstAnimation.h"
 #include "Weapon.h"
 #include "PauseMenu.h"
+#include "FirstBoss.h"
+
+class Scoreboard;
 
 class Game : public BaseGame
 {
@@ -39,12 +42,13 @@ public:
 private:
 	// DATA MEMBERS
 	Level* m_Level;
-	Avatar m_Avatar;
+	Avatar* m_Avatar;
 	Camera* m_Camera;
 	HUD* m_Hud;
 	PowerUpManager m_PowerUpManager;
 	EntityManager m_EntityManager;
 	PauseMenu* m_PauseMenu;
+	Scoreboard* m_Scoreboard;
 
 	int m_Score;
 	int m_Lives;
@@ -56,6 +60,12 @@ private:
 	bool m_PlayerDied;
 	bool m_GameIsPaused;
 	bool m_UseVfx;
+
+	std::string m_PlayerName{""};
+	std::string m_LetterInput{""};
+
+	int m_RemainingHealth{ 0 };
+	int m_RemainingMana{ 0 };
 	Intro m_Intro;
 	Menu* m_Menu;
 	FirstAnimation m_FirstAnimation;
@@ -69,6 +79,9 @@ private:
 		WEAPONCHOICE,
 		LEVEL1,
 		PAUSE,
+		SCOREBOARD,
+		ROUNDOVER,
+		GAMEOVER,
 	};
 	GameState m_GameState;
 	GameState m_LastState;
@@ -86,6 +99,8 @@ private:
 	SoundEffect* m_pDeathSound;
 	SoundEffect* m_pPickUp;
 	SoundEffect* m_pPause;
+	SoundEffect* m_pBonusPointUp;
+	SoundEffect* m_pBonusPointDown;
 
 	// FUNCTIONS
 	void Initialize();
@@ -106,5 +121,13 @@ private:
 	void DisplayControls() const;
 	void ResetGame();
 	void ToggleVfx();
+
+	void DrawFillPlayerName() const;
+	void UpdateGameOver(float elapsedSec);
+
+	void DrawLevelClear() const;
+	void UpdateLevelClear(float elapsedSec);
+	void DeadBossUpdate();
+
 };
 

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Game.h"
 #include <iostream>
+#include "Scoreboard.h"
 
 Game::Game(const Window& window)
 	:BaseGame{ window },
@@ -20,7 +21,9 @@ void Game::Initialize( )
 {
 	InitializeMusic();
 	AddPowerUps();
+	m_Scoreboard = new Scoreboard(Point2f{ GetViewPort().width, GetViewPort().height });
 	m_Level = new Level();
+	m_Avatar = new Avatar();
 	m_Camera = new Camera{ GetViewPort().width, GetViewPort().height };
 	m_Camera->SetLevelBoundaries(m_Level->GetBoundaries());
 	m_Hud = new HUD{ Rectf{ 0, 0, GetViewPort().width, 90.f } };
@@ -51,6 +54,12 @@ void Game::Cleanup( )
 	m_Level = nullptr;
 	delete m_PauseMenu;
 	m_PauseMenu = nullptr;
+
+	delete m_Scoreboard;
+	m_Scoreboard = nullptr;
+
+	delete m_Avatar;
+	m_Avatar = nullptr;
 }
 
 void Game::Update(const float elapsedSec )
@@ -99,22 +108,29 @@ void Game::Update(const float elapsedSec )
 		m_WeaponChoice.Update(elapsedSec);
 		if (m_WeaponChoice.GetIsSelected())
 		{
-			m_Avatar.SetWeaponChoice(m_WeaponChoice.GetSelection());
+			m_Avatar->SetWeaponChoice(m_WeaponChoice.GetSelection());
 			m_GameState = LEVEL1;
 		}
 		break;
 	case Game::LEVEL1:
 		UpdateLevel(elapsedSec);
-		if (m_Avatar.GetState() == Avatar::ActionState::dead) 
+		if (m_Avatar->GetState() == Avatar::ActionState::dead) 
 		{
 			m_pDeathSound->Play(0);
 			m_Lives -= 1;
 			delete m_Level;
 			m_Level = new Level();
-			m_Avatar.Reset();
+			m_EntityManager.Reset();
+			m_Avatar->Reset();
 		}
 		break;
 	case Game::PAUSE:
+		break;
+	case Game::ROUNDOVER:
+		UpdateLevelClear(elapsedSec);
+		break;
+	case Game::GAMEOVER:
+		UpdateGameOver(elapsedSec);
 		break;
 	default:
 		break;
@@ -165,6 +181,15 @@ void Game::Draw( ) const
 		}
 		m_PauseMenu->Draw();
 		break;
+	case Game::SCOREBOARD:
+		m_Scoreboard->Draw();
+		break;
+	case Game::ROUNDOVER:
+		DrawLevelClear();
+		break;
+	case Game::GAMEOVER:
+		DrawFillPlayerName();
+		break;
 	default:
 		break;
 	}
@@ -176,22 +201,68 @@ void Game::ProcessKeyDownEvent( const SDL_KeyboardEvent & e )
 	//switch ( e.keysym.sym )
 	//{
 	//	case SDLK_UP:
-	//		m_Avatar.Update(elapsedSec, m_Level);
+	//		m_Avatar->Update(elapsedSec, m_Level);
 	//		break;
 	//}
 }
 
 void Game::ProcessKeyUpEvent( const SDL_KeyboardEvent& e )
 {
+	if (m_GameState == GameState::ROUNDOVER)
+		return;
+
+	if (m_GameState == GameState::GAMEOVER)
+	{
+		switch (e.keysym.sym)
+		{
+		case SDLK_BACKSPACE:
+			if (m_PlayerName.size() > 0)
+				m_PlayerName.pop_back();
+			break;
+		case SDLK_RETURN:
+			if (m_PlayerName.size() == 3)
+			{
+				m_Scoreboard->AddScore(m_PlayerName, m_Score);
+				ResetGame();
+				m_GameState = GameState::MENU;
+				m_Menu->SetActive();
+			}
+			break;
+		default:
+			if (m_PlayerName.size() >= 3)
+				break;
+
+			m_LetterInput = SDL_GetKeyName(e.keysym.sym);
+
+			if (std::isalpha(m_LetterInput.c_str()[0]))
+				m_PlayerName += m_LetterInput;
+			break;
+		}
+		return;
+	}
+	
+	
 	switch ( e.keysym.sym )
 	{
 	case SDLK_w:
-		m_Avatar.ChangePower();
+		m_Avatar->ChangePower();
 		m_pPowerChange->Play(0);
 		break;
 	case SDLK_RETURN:
-		if (m_Menu->GetMenuActive()) 
-			m_Menu->StartGame();
+		if (m_Menu->GetMenuActive())
+		{
+			switch (m_Menu->GetMenuCount())
+			{
+			case 0:
+				m_Menu->StartGame();
+				break;
+			case 1:
+				m_LastState = m_GameState;
+				m_GameState = GameState::SCOREBOARD;
+				break;
+			}
+
+		}
 
 		if (not m_Intro.GetIntroState()) 
 			m_Intro.SkipIntro(); 
@@ -223,6 +294,7 @@ void Game::ProcessKeyUpEvent( const SDL_KeyboardEvent& e )
 					ToggleVfx();
 					break;
 				case 4:
+					m_GameState = GameState::SCOREBOARD;
 					break;
 				case 5:
 					ResetGame();
@@ -241,9 +313,17 @@ void Game::ProcessKeyUpEvent( const SDL_KeyboardEvent& e )
 	case SDLK_ESCAPE:
 	case SDLK_i:
 		m_pPause->Play(0);
-		if (m_GameState != GameState::PAUSE)
+		if (m_GameState != GameState::PAUSE or m_GameState == GameState::SCOREBOARD)
 		{
-			m_LastState = m_GameState;
+			if (m_LastState == GameState::MENU and m_GameState == GameState::SCOREBOARD)
+			{
+				m_GameState = m_LastState; 
+				return;
+			}
+
+			if (m_GameState != GameState::SCOREBOARD)
+				m_LastState = m_GameState;
+
 			m_GameState = GameState::PAUSE;
 			m_GameIsPaused = true;
 			DisplayControls();
@@ -267,10 +347,14 @@ void Game::ProcessKeyUpEvent( const SDL_KeyboardEvent& e )
 	case SDLK_UP:
 		if (m_GameState == GameState::PAUSE)
 			m_PauseMenu->DecrementMenuCount();
+		if (m_GameState == GameState::MENU)
+			m_Menu->DecrementMenuCount();
 		break;
 	case SDLK_DOWN:
 		if (m_GameState == GameState::PAUSE)
 			m_PauseMenu->IncrementMenuCount();
+		if (m_GameState == GameState::MENU)
+			m_Menu->IncrementMenuCount();
 		break;
 	}
 }
@@ -324,24 +408,24 @@ void Game::ClearBackground( ) const
 void Game::DoCollisionTests()
 {
 
-	if (m_Avatar.IsAttacking()) m_EntityManager.HitEntity(m_Avatar.GetAttackZone(), m_Avatar.GetDamageDealt());
-	if (m_EntityManager.HitAvatar(m_Avatar.GetShape())) m_Avatar.DealOneDamage(g_pPlayerHurt);
-	if (m_Avatar.IsCastingSpell() and (not m_CastingSpell or m_Avatar.GetCurrentPower() == Powers::blast))
+	if (m_Avatar->IsAttacking()) m_EntityManager.HitEntity(m_Avatar->GetAttackZone(), m_Avatar->GetDamageDealt());
+	if (m_EntityManager.HitAvatar(m_Avatar->GetShape())) m_Avatar->DealOneDamage(g_pPlayerHurt);
+	if (m_Avatar->IsCastingSpell() and (not m_CastingSpell or m_Avatar->GetCurrentPower() == Powers::blast))
 	{
 		m_CastingSpell = true;
-		m_EntityManager.CastSpellOnEntity(m_Avatar.GetCurrentPower(), m_Avatar.GetShape(), m_Avatar.GetSpellDamage(), m_Avatar.GetFireBallVector(), g_pTimeFreeze, m_pBlastAttack, m_pBoltAttack);
+		m_EntityManager.CastSpellOnEntity(m_Avatar->GetCurrentPower(), m_Avatar->GetShape(), m_Avatar->GetSpellDamage(), m_Avatar->GetFireBallVector(), g_pTimeFreeze, m_pBlastAttack, m_pBoltAttack);
 	}
 	//add powerup
 	if (m_EntityManager.GetStatueState())
 	{
 		const Point2f powerUpOffset{ 14, 25 };
 		const Point2f statuePos{ m_EntityManager.GetStatuePos().x + powerUpOffset.x, m_EntityManager.GetStatuePos().y + powerUpOffset.y };
-		m_PowerUpManager.AddItem(statuePos, m_Avatar.GetHealth(), m_Avatar.GetMana(), m_Avatar.GetMaxStrength());
+		m_PowerUpManager.AddItem(statuePos, m_Avatar->GetHealth(), m_Avatar->GetMana(), m_Avatar->GetMaxStrength());
 	}
-	if (m_PowerUpManager.HitItem(m_Avatar.GetShape()))
+	if (m_PowerUpManager.HitItem(m_Avatar->GetShape()))
 	{
 		m_pPickUp->Play(0);
-		m_Avatar.PowerUpHit(m_PowerUpManager.GetPowerType());
+		m_Avatar->PowerUpHit(m_PowerUpManager.GetPowerType());
 	}
 }
 
@@ -369,6 +453,8 @@ void Game::InitializeMusic()
 	m_pStartSound = new SoundEffect("Audio/StartSelect.mp3");
 	m_pDeathSound = new SoundEffect("Audio/18 Game Over.mp3");
 	m_pPickUp = new SoundEffect("Audio/pickup.mp3");
+	m_pBonusPointUp = new SoundEffect("Audio/BonusPointUp.mp3");
+	m_pBonusPointDown = new SoundEffect("Audio/BonusPointDown.mp3");
 	m_pPause = new SoundEffect("Audio/pause.mp3");
 	m_pPause->SetVolume(128);
 	g_pEnemyDeath->SetVolume(32);
@@ -417,6 +503,12 @@ void Game::ReleaseMusic()
 
 	delete m_pPause;
 	m_pPause = nullptr;
+
+	delete m_pBonusPointUp;
+	m_pBonusPointUp = nullptr;
+
+	delete m_pBonusPointDown;
+	m_pBonusPointDown = nullptr;
 }
 
 void Game::WalkToBossRoomAnimation()
@@ -430,16 +522,16 @@ void Game::WalkToBossRoomAnimation()
 	m_Level->ResetPlayerLockedInBounds();
 	if (m_IsCameraReset) m_Camera->UnlockCamera();
 	m_LockPLayer = true;
-	m_Avatar.ForceMovingState();
-	if (m_Avatar.GetShape().left < levelBoundaries.width + GetViewPort().width / 3.f)
+	m_Avatar->ForceMovingState();
+	if (m_Avatar->GetShape().left < levelBoundaries.width + GetViewPort().width / 3.f)
 	{
 		if (not m_IsCameraReset)
 		{
-			if (m_Avatar.GetShape().left < m_Camera->GetCameraPos(m_Avatar.GetShape()).left + m_Camera->GetCameraPos(m_Avatar.GetShape()).width / 2)
+			if (m_Avatar->GetShape().left < m_Camera->GetCameraPos(m_Avatar->GetShape()).left + m_Camera->GetCameraPos(m_Avatar->GetShape()).width / 2)
 			{
-				m_Avatar.ForceMoveRight();
+				m_Avatar->ForceMoveRight();
 			}
-			else if (m_Avatar.GetShape().left - 2 > m_Camera->GetCameraPos(m_Avatar.GetShape()).left + m_Camera->GetCameraPos(m_Avatar.GetShape()).width / 2)
+			else if (m_Avatar->GetShape().left - 2 > m_Camera->GetCameraPos(m_Avatar->GetShape()).left + m_Camera->GetCameraPos(m_Avatar->GetShape()).width / 2)
 			{
 				m_Camera->OffsetCamera(1);
 			}
@@ -450,37 +542,41 @@ void Game::WalkToBossRoomAnimation()
 		}
 		else
 		{
-			m_Avatar.ForceMoveRight();
+			m_Avatar->ForceMoveRight();
 			m_Camera->OffsetCamera(1);
 		}
 	}
 	else
 	{
-		if (m_Camera->GetCameraPos(m_Avatar.GetShape()).left < 4196)
+		if (m_Camera->GetCameraPos(m_Avatar->GetShape()).left < 4196)
 		{
 			m_Camera->OffsetCamera(1);
 		}
 		else
 		{
-			m_LockPLayer = false;
 			Rectf newBounderies{ m_Level->GetBoundaries() };
 			newBounderies.width += GetViewPort().width;
 			m_Camera->SetLevelBoundaries(newBounderies);
 			m_Level->SetPlayerInBossRoom();
 			m_Camera->ResetOffset();
+			
+			m_EntityManager.AddEntity(Point2f{ newBounderies.width, m_Avatar->GetShape().bottom }, abs(int("FirstBoss")), Entity::EnemyType::boss, new Texture("bossMainBody.png"), 0);
+			m_LockPLayer = false;
 		}
 	}
+
+
 }
 
 void Game::UpdateGameObjects(const float elapsedSec)
 {
-	m_EntityManager.Update(elapsedSec, m_Level, m_Avatar.GetShape(), g_pEnemyDeath);
+	m_EntityManager.Update(elapsedSec, m_Level, m_Avatar->GetShape(), g_pEnemyDeath);
 	m_PowerUpManager.Update(elapsedSec, m_Level);
-	m_Avatar.Update(elapsedSec, m_Level, g_pSwingSwoosh, m_LockPLayer);
+	m_Avatar->Update(elapsedSec, m_Level, g_pSwingSwoosh, m_LockPLayer);
 
 	m_Score += m_EntityManager.GetScore();
 	m_Hud->Update(m_Score, m_Lives, m_Avatar);
-
+	
 	//play boss music
 	if (!g_pLevel1SoundTrack->IsPlaying())
 	{
@@ -496,22 +592,46 @@ void Game::DrawGameObjects() const
 	glPushMatrix();
 	{
 		m_Hud->Draw();
-		m_Camera->Transform(m_Avatar.GetShape());
-		if (m_AnimTime <= 2.f and m_CastingSpell and m_Avatar.GetCurrentPower() == Powers::bolt)
-			m_Level->DrawBackground(GetViewPort(), m_Avatar.GetShape(), m_NrFrames);
+		m_Camera->Transform(m_Avatar->GetShape());
+		if (m_AnimTime <= 2.f and m_CastingSpell and m_Avatar->GetCurrentPower() == Powers::bolt)
+			m_Level->DrawBackground(GetViewPort(), m_Avatar->GetShape(), m_NrFrames);
 		else
-			m_Level->DrawBackground(GetViewPort(), m_Avatar.GetShape());
+			m_Level->DrawBackground(GetViewPort(), m_Avatar->GetShape());
 		m_EntityManager.Draw();
 		m_PowerUpManager.Draw();
-		m_Avatar.Draw();
+		m_Avatar->Draw();
 	}
 	glPopMatrix();
 }
 
+void Game::DeadBossUpdate()
+{
+	m_GameState = GameState::ROUNDOVER;
+	m_LockPLayer = true;
+	m_AnimTime = 0;
+	m_RemainingHealth = m_Avatar->GetHealth();
+	m_RemainingMana = m_Avatar->GetMana();
+
+	delete g_pLevel1SoundTrack;
+	g_pLevel1SoundTrack = new SoundStream("Audio/08 Boss Clear.mp3");
+	g_pLevel1SoundTrack->SetVolume(32);
+	g_pLevel1SoundTrack->Play(0);
+
+	m_Score += 50000;
+}
+
 void Game::UpdateLevel(const float elapsedSec)
 {
-	if (m_EntityManager.GetMiniBossIsDead() and not (m_Avatar.GetShape().left > m_Level->GetBoundaries().width and not m_LockPLayer)) WalkToBossRoomAnimation();
-	if (m_Camera->GetCameraPos(m_Avatar.GetShape()).left >= 3620 and not m_LockPLayer)
+	if (m_EntityManager.GetBossIsDead())
+	{
+		DeadBossUpdate();
+		return;
+	}
+	
+	if (m_EntityManager.GetMiniBossIsDead() and not (m_Avatar->GetShape().left > m_Level->GetBoundaries().width and not m_LockPLayer)) 
+		WalkToBossRoomAnimation();
+	
+	if (m_Camera->GetCameraPos(m_Avatar->GetShape()).left >= 3620 and not m_LockPLayer)
 	{
 		m_Level->SetPlayerLockedInBounds();
 		m_Camera->LockCamera();
@@ -521,7 +641,7 @@ void Game::UpdateLevel(const float elapsedSec)
 	UpdateGameObjects(elapsedSec);
 
 	// Do collision
-	if (not m_Avatar.IsCastingSpell())
+	if (not m_Avatar->IsCastingSpell())
 	{
 		m_AnimTime = 0;
 		m_CastingSpell = false;
@@ -563,11 +683,26 @@ void Game::ResetGame()
 	m_LockPLayer = false;
 	m_IsCameraReset = false;
 	m_GameIsPaused = false;
+	m_Camera->UnlockCamera();
+
+	delete m_Avatar;
+	m_Avatar = new Avatar();
+
+	delete m_Camera;
+	m_Camera = new Camera{ GetViewPort().width, GetViewPort().height };
+	m_Camera->SetLevelBoundaries(m_Level->GetBoundaries());
 
 	delete m_Level;
 	m_Level = new Level();
 	
-	m_Avatar.Reset();
+	delete g_pLevel1SoundTrack;
+	g_pLevel1SoundTrack = new SoundStream("Audio/01 Opening - Part 1 _ Ending - Part 2.mp3");
+	g_pLevel1SoundTrack->SetVolume(16);
+	g_pLevel1SoundTrack->Play(true);
+
+	m_EntityManager.Reset();
+	AddPowerUps();
+
 	m_WeaponChoice.SetUnselected();
 	m_GameState = WEAPONCHOICE;
 }
@@ -592,4 +727,113 @@ void Game::ToggleVfx()
 		m_pPowerChange->SetVolume(0);
 		m_pPickUp->SetVolume(0);
 	}
+}
+
+void Game::DrawFillPlayerName() const
+{
+	utils::SetColor(Color4f{ 0.f, 0.f, 0.f, 1.f });
+	utils::FillRect(Rectf{ GetViewPort() });
+
+	const Texture enterName{ Texture("ENTER YOUR NAME:", "zig.ttf", 26, Color4f{ 1.f, 1.f, 1.f, 1.f }, true) };
+	const Rectf bounds{ GetViewPort() };
+
+	std::string underscore{};
+	for (int i = 0; i < 3 - m_PlayerName.size(); i++)
+	{
+		if (m_NrFrames == 0 and i == 0)
+			underscore += " ";
+		else
+			underscore += "_";
+	}
+	
+	Texture name{ Texture(" ", "zig.ttf", 26, Color4f{1.f, 1.f, 1.f, 1.f})};
+
+	if (m_PlayerName.size() > 0)
+	{
+		name = { Texture(m_PlayerName, "zig.ttf", 26, Color4f{ 1.f, 1.f, 1.f, 1.f }) };
+		name.Draw(Point2f{ bounds.width * 0.5f - 15, bounds.bottom + bounds.height * 0.5f });
+	}
+	
+	if (underscore.size() > 0)
+	{
+		const Texture underscoreTexture{ Texture(underscore, "zig.ttf", 26, Color4f{ 1.f, 1.f, 1.f, 1.f }) };
+		if (m_PlayerName.size() > 0)
+			underscoreTexture.Draw(Point2f{ bounds.width * 0.5f - 15 + name.GetWidth(), bounds.bottom + bounds.height * 0.5f});
+		else
+			underscoreTexture.Draw(Point2f{ bounds.width * 0.5f - 15, bounds.bottom + bounds.height * 0.5f });
+	}
+
+	enterName.Draw(Point2f{ bounds.width * 0.5f - enterName.GetWidth() * 0.5f, bounds.bottom + bounds.height * 0.7f });
+
+	glPushMatrix();
+		m_Hud->Draw();
+	glPopMatrix();
+}
+
+void Game::UpdateGameOver(float elapsedSec)
+{
+	m_AnimTime += elapsedSec;
+	if (m_AnimTime >= 0.2f)
+	{
+		++m_NrFrames %= 2;
+		m_AnimTime -= 0.2f;
+	}
+}
+
+void Game::DrawLevelClear() const
+{
+	utils::SetColor(Color4f{ 0.f, 0.f, 0.f, 1.f });
+	utils::FillRect(Rectf{ GetViewPort() });
+
+	const Texture levelClear{ Texture("   ROUND 1-1\n\nREMLIA    CLEAR", "zig.ttf", 26, Color4f{ 1.f, 1.f, 1.f, 1.f }, true) };
+	const Rectf bounds{ GetViewPort() };
+
+	levelClear.Draw(Point2f{ bounds.width * 0.5f - levelClear.GetWidth() * 0.25f, bounds.bottom + bounds.height * 0.5f });
+	
+	glPushMatrix();
+		m_Hud->Draw();
+	glPopMatrix();
+}
+
+void Game::UpdateLevelClear(float elapsedSec)
+{
+	m_AnimTime += elapsedSec;
+	if (m_AnimTime >= 4.1f)
+	{
+		if (m_RemainingHealth == 0 and m_RemainingMana == 0)
+		{
+			if (m_Avatar->GetHealth() < 20)
+			{
+				m_pBonusPointUp->Play(0);
+				m_Avatar->HealOne();
+			}
+			else
+			{
+				m_GameState = GameState::GAMEOVER;
+				m_NrFrames = 0;
+				m_AnimTime = 0;
+			}
+		}
+
+		if (m_RemainingHealth > 0 or m_RemainingMana > 0)
+			m_pBonusPointDown->Play(0);
+
+		if (m_RemainingHealth > 0)
+		{
+			m_Score += 100;
+			m_RemainingHealth -= 1;
+			m_Avatar->DealOneDamage(nullptr);
+			
+		}
+		if (m_RemainingMana > 0)
+		{
+			m_Score += 100;
+			m_RemainingMana -= 1;
+			m_Avatar->RemoveOneMana();
+		}
+
+		m_AnimTime -= 0.1f;
+	}
+
+	m_Hud->Update(m_Score, m_Lives, m_Avatar);
 }

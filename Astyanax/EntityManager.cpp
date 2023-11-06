@@ -43,6 +43,9 @@ void EntityManager::AddEntity(const Point2f& center, const int id, const Entity:
 	case Entity::EnemyType::miniBoss:
 		m_pEntity.push_back(new MiniBoss(center, id, texture, enemyType));
 		break;
+	case Entity::EnemyType::boss:
+		m_pEntity.push_back(new FirstBoss(center, id, enemyType, texture));
+		break;
 	}
 }
 
@@ -113,7 +116,34 @@ void EntityManager::Update(const float elapsedSec, Level*& level, const Rectf& a
 				m_pEntity.push_back(new Projectile(projectilePos, -horSpeed, 0.f, new Texture{ "projectile2.png" }, Entity::EnemyType::projectile));
 			}
 		}
-
+		if (m_pEntity[i]->GetEnemyType() == Entity::boss and not m_pEntity[i]->GetIsFrozen())
+		{
+			if (m_pEntity[i]->GetState() == Entity::ActionState::attacking)
+			{
+				if (m_pEntity[i]->GetIsFirstPhaseOver())
+				{
+					int horSpeed = 300.f;
+					if (m_pEntity[i]->IsGoingLeft())
+						horSpeed = -horSpeed;
+					
+					const int randDist{ rand() % 80};
+					const Rectf entityShape{ m_pEntity[i]->GetAttackZone() };
+					const Point2f projectilePos{ entityShape.left + entityShape.width / 2, entityShape.bottom + entityShape.height + 20 };
+					m_pEntity.push_back(new Projectile(projectilePos, horSpeed * (0.5f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (0.5f)))), 300.f + randDist, new Texture{ "bossProjectile2.png" }, Entity::EnemyType::projectile));
+					m_pEntity.push_back(new Projectile(projectilePos, horSpeed * (0.7f + (0.5f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (0.5f))))), 330 + randDist, new Texture{ "bossProjectile2.png" }, Entity::EnemyType::projectile));
+					m_pEntity.push_back(new Projectile(projectilePos, horSpeed * (1.f +(0.5f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (0.5f))))), 360 + randDist, new Texture{"bossProjectile2.png"}, Entity::EnemyType::projectile));
+				}
+				else
+				{
+					constexpr int horSpeed = 300.f;
+					const Rectf entityShape{ m_pEntity[i]->GetAttackZone() };
+					const Point2f projectilePos{ entityShape.left - 52, entityShape.bottom + 154 };
+					m_pEntity.push_back(new Projectile(projectilePos, -horSpeed, 0.f, new Texture{ "bossProjectile1.png" }, Entity::EnemyType::projectile, 3));
+					m_pEntity.push_back(new Projectile(projectilePos, -horSpeed, -100.f, new Texture{ "bossProjectile1.png" }, Entity::EnemyType::projectile, 3));
+					m_pEntity.push_back(new Projectile(projectilePos, -horSpeed, -200.f, new Texture{ "bossProjectile1.png" }, Entity::EnemyType::projectile, 3));
+				}
+			}
+		}
 	}
 
 
@@ -233,7 +263,6 @@ void EntityManager::HitEntity(const Rectf& rect, const int damageDealt)
 	{
 		if (m_pEntity[i]->IsOverlapping(Rectf{ rect.left, rect.bottom, rect.width * 2, rect.height * 2 }) and not m_pEntity[i]->EntityIsHit())
 		{
-			std::cout << "Damage Dealt: " << damageDealt << std::endl;
 			m_pEntity[i]->DealDamage(damageDealt);
 			m_pHitMarkers.push_back(new HitMarker(Point2f{ rect.left, rect.bottom }));
 		}
@@ -305,8 +334,9 @@ void EntityManager::CheckDeleteEntity(const SoundEffect* deathAudio)
 				case Entity::powerUp:
 					m_Score += 500;
 					break;
-				case Entity::bomb:
 				case Entity::projectile:
+					break;
+				case Entity::bomb:
 				case Entity::blob:
 					m_Score += 100;
 					break;
@@ -323,6 +353,9 @@ void EntityManager::CheckDeleteEntity(const SoundEffect* deathAudio)
 				case Entity::skeleton:
 					m_Score += 1000;
 					//deathAudio->Play(0);
+					break;
+				case::Entity::boss:
+					m_Score += 40000;
 					break;
 				default:
 					break;
@@ -373,4 +406,27 @@ bool EntityManager::GetMiniBossIsDead() const
 			return true;
 	}
 	return false;
+}
+
+bool EntityManager::GetBossIsDead() const
+{
+	for (int i = 0; i < m_pEntity.size(); i++)
+	{
+		if (m_pEntity[i]->GetEnemyType() == Entity::EnemyType::boss and m_pEntity[i]->GetState() == Entity::ActionState::dead)
+			return true;
+	}
+	return false;
+}
+
+void EntityManager::Reset()
+{
+	for (int i = 0; i < m_pEntity.size(); i++)
+	{
+		delete m_pEntity[i];
+		m_pEntity[i] = m_pEntity[m_pEntity.size() - 1];
+		m_pEntity.pop_back();
+	}
+
+	if (m_pEntity.size() > 0)
+		return Reset();
 }

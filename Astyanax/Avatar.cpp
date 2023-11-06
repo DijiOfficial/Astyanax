@@ -5,7 +5,7 @@
 #include "Powers.h"
 
 Avatar::Avatar() :
-	m_Shape{ Rectf{50, 280, 28, 48} },
+	m_Shape{ Rectf{100, 280, 28, 48} },
 	m_HorSpeed{ 100.f },
 	m_JumpSpeed{ 800.f },
 	m_Velocity{ Vector2f{0.0f, 0.0f} },
@@ -17,7 +17,7 @@ Avatar::Avatar() :
 	m_Health{ 20 },
 	m_Mana{ 20 },
 	m_Strength{ 5 },
-	m_CurrentMaxStrength{ 25 },
+	m_CurrentMaxStrength{ 5 },
 	m_CurrentPower{ new Powers(Powers::Power::blast)},
 	m_SpeedBuff{ 0.f },
 
@@ -170,9 +170,9 @@ void Avatar::Update(const float elapsedSec, Level*& level, SoundEffect* swingSwo
 			if (not isPlayerLocked) CheckStateOnGround(swingSwoosh);
 		}
 		else if (m_ActionState != ActionState::hit and not isPlayerLocked)
-	{
-		CheckStateInAir(elapsedSec, swingSwoosh);
-	}
+		{
+			CheckStateInAir(elapsedSec, swingSwoosh);
+		}
 	}
 
 	if (not m_IsWaiting or m_ActionState == ActionState::attacking or (m_ActionState == ActionState::dying))
@@ -462,6 +462,12 @@ Rectf Avatar::GetAttackZone() const
 
 void Avatar::DealOneDamage(SoundEffect* playerHurt)
 {
+	if (playerHurt == nullptr)
+	{
+		m_Health -= 1;
+		return;
+	}
+
 	if (not m_IsInvincible)
 	{
 		m_Health -= 1;
@@ -548,7 +554,8 @@ int Avatar::GetSpellDamage() const
 	switch (m_CurrentPower->GetCurrentPower()) // no idea about those values
 	{
 	case Powers::bolt:
-		spellDamage = 45;
+		spellDamage = 1000;
+		//spellDamage = 45;
 		break;
 	case Powers::blast:
 		spellDamage = 25;

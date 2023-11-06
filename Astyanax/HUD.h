@@ -13,7 +13,7 @@ public:
 	HUD& operator=(const HUD& other) = delete;
 	HUD& operator=(HUD&& other) noexcept = delete;
 	void Draw() const;
-	void Update(const int score, const int lives, const Avatar& avatar);
+	void Update(const int score, const int lives, const Avatar* avatar);
 
 private:
 	const Rectf m_Background;

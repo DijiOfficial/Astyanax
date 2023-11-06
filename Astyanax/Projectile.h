@@ -4,8 +4,7 @@
 class Projectile final: public Entity
 {
 public:
-
-	Projectile(const Point2f& bottomLeft, const int horSpeed, const int speed, const Texture* texture, const Entity::EnemyType enemyType);
+	Projectile(const Point2f& bottomLeft, const int horSpeed, const int speed, const Texture* texture, const Entity::EnemyType enemyType, const int nrOfFrames = 0);
 	Projectile(const Projectile& other) = delete;
 	Projectile(Projectile&& other) noexcept = delete;
 	Projectile& operator=(const Projectile& other) = delete;
@@ -17,5 +16,9 @@ public:
 private:
 	void UpdateFrames(float elapsedSec) override;
 	ActionState m_ActionState;
+	int m_AnimFrame;
+	float m_AnimTime;
+	int m_NrOfFrames;
+	Rectf m_TextClip;
 };
 

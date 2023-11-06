@@ -49,6 +49,8 @@ public:
 	void SetWeaponChoice(const int choice);
 	ActionState GetState() const;;
 	void Reset();
+	void RemoveOneMana() { m_Mana -= 1; };
+	void HealOne() { m_Health += 1; m_Mana += 1; };
 private:
 	Rectf m_Shape;
 	const float m_HorSpeed;

@@ -15,6 +15,9 @@ public:
 	bool GetMenuActive() const { return m_IsMenuActive; };
 	void StartGame() { m_IsMenuActive = false; };
 	void SetActive() { m_IsMenuActive = true; };
+	void IncrementMenuCount() { m_MenuOptionsCount = ++m_MenuOptionsCount % 2; };
+	void DecrementMenuCount() { m_MenuOptionsCount = (m_MenuOptionsCount - 1) < 0 ? 0 : --m_MenuOptionsCount; };
+	int GetMenuCount() const { return m_MenuOptionsCount; };
 
 private:
 	Texture m_BackgroundTexture;
@@ -25,5 +28,6 @@ private:
 	float m_AnimeTime;
 	bool m_DisplayText;
 	bool m_IsMenuActive;
+	int m_MenuOptionsCount;
 };
 

@@ -2,8 +2,9 @@
 #include "Skeleton.h"
 #include <iostream>
 
-Skeleton::Skeleton(const Point2f& bottomLeft, const int id, const Texture* texture, const Entity::EnemyType enemyType) : Entity(bottomLeft, 32.f, 100.f, -120.f, id, 25, texture, enemyType),
-	m_ActionState{ spawning }
+Skeleton::Skeleton(const Point2f& bottomLeft, const int id, const Texture* texture, const Entity::EnemyType enemyType) 
+	: Entity(bottomLeft, 32.f, 100.f, -120.f, id, 25, texture, enemyType)
+	,m_ActionState{ spawning }
 {
 	m_TextClip = { Rectf{ 0.f, 0.f, 60.f, m_pTexture->GetHeight()} };
 }

@@ -43,6 +43,12 @@
     <Filter Include="Source Files\Levels &amp; Animations">
       <UniqueIdentifier>{eec92031-edd7-4525-bd0b-b7333cebcf5d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Entities\Boss">
+      <UniqueIdentifier>{81b9032f-d018-418e-97cb-7a0b166f8f2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities\Boss">
+      <UniqueIdentifier>{ed00d307-a88f-4956-af2c-3541005b7518}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -132,6 +138,18 @@
     <ClCompile Include="PauseMenu.cpp">
       <Filter>Source Files\Levels &amp; Animations</Filter>
     </ClCompile>
+    <ClCompile Include="FirstBoss.cpp">
+      <Filter>Source Files\Entities\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="BossBody.cpp">
+      <Filter>Source Files\Entities\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="bossHead.cpp">
+      <Filter>Source Files\Entities\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Scoreboard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -217,6 +235,18 @@
     </ClInclude>
     <ClInclude Include="PauseMenu.h">
       <Filter>Header Files\Levels &amp; Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="FirstBoss.h">
+      <Filter>Header Files\Entities\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="BossBody.h">
+      <Filter>Header Files\Entities\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="bossHead.h">
+      <Filter>Header Files\Entities\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Scoreboard.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

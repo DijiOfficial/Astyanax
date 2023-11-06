@@ -11,6 +11,7 @@
 #include "PlantEnemy.h"
 #include "Projectile.h"
 #include "MiniBoss.h"
+#include "FirstBoss.h"
 
 class EntityManager final
 {
@@ -41,7 +42,8 @@ public:
 	bool GetStatueState() const;
 	Point2f GetStatuePos() const;
 	bool GetMiniBossIsDead() const;
-
+	bool GetBossIsDead() const;
+	void Reset();
 
 	int GetScore();
 };

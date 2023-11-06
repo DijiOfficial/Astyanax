@@ -152,6 +152,8 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s</Command>
     <ClCompile Include="Avatar.cpp" />
     <ClCompile Include="Blob.cpp" />
     <ClCompile Include="Bombs.cpp" />
+    <ClCompile Include="BossBody.cpp" />
+    <ClCompile Include="bossHead.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="Entity.cpp" />
@@ -159,6 +161,7 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s</Command>
     <ClCompile Include="EyeBallMonster.cpp" />
     <ClCompile Include="FireBall.cpp" />
     <ClCompile Include="FirstAnimation.cpp" />
+    <ClCompile Include="FirstBoss.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="HitMarker.cpp" />
     <ClCompile Include="HUD.cpp" />
@@ -174,6 +177,7 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s</Command>
     <ClCompile Include="PowerUp.cpp" />
     <ClCompile Include="PowerUpManager.cpp" />
     <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="Scoreboard.cpp" />
     <ClCompile Include="Skeleton.cpp" />
     <ClCompile Include="Statue.cpp" />
     <ClCompile Include="TextureManager.cpp" />
@@ -183,6 +187,8 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s</Command>
     <ClInclude Include="Avatar.h" />
     <ClInclude Include="Blob.h" />
     <ClInclude Include="Bombs.h" />
+    <ClInclude Include="BossBody.h" />
+    <ClInclude Include="bossHead.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="Entity.h" />
@@ -190,6 +196,7 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s</Command>
     <ClInclude Include="EyeBallMonster.h" />
     <ClInclude Include="FireBall.h" />
     <ClInclude Include="FirstAnimation.h" />
+    <ClInclude Include="FirstBoss.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="HitMarker.h" />
     <ClInclude Include="HUD.h" />
@@ -204,6 +211,7 @@ xcopy "$(SolutionDir)Resources\*.*" "$(TargetDir)" /y /d /s</Command>
     <ClInclude Include="PowerUp.h" />
     <ClInclude Include="PowerUpManager.h" />
     <ClInclude Include="Projectile.h" />
+    <ClInclude Include="Scoreboard.h" />
     <ClInclude Include="Skeleton.h" />
     <ClInclude Include="Statue.h" />
     <ClInclude Include="TextureManager.h" />

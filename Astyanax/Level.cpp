@@ -65,7 +65,11 @@ void Level::DrawBackground(const Rectf viewport, const Rectf& avatar) const
 
 bool Level::IsCollidingWithWorld(const Rectf& actorShape) const
 {
-	if ((m_IsPlayerLockedInBounds and actorShape.left <= m_Boundaries.width - (3 * m_ClipWidth / 4)) or actorShape.left + actorShape.width * 2 > m_Boundaries.width)  return true;
+	int extraWidth{ 0 };
+	if (m_IsPlayerInBossRoom)
+		extraWidth = m_ClipWidth;
+
+	if ((m_IsPlayerLockedInBounds and actorShape.left <= m_Boundaries.width - (3 * m_ClipWidth / 4)) or actorShape.left + actorShape.width * 2 > m_Boundaries.width + extraWidth)  return true;
 
 	utils::HitInfo hitInfo{};
 	const Point2f beginHorBtm{ actorShape.left + actorShape.width, actorShape.bottom + 1 };

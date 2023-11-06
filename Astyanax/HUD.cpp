@@ -35,7 +35,7 @@ HUD::~HUD()
 	m_Power = nullptr;
 }
 
-void HUD::Update(const int score, const int lives, const Avatar& avatar)
+void HUD::Update(const int score, const int lives, const Avatar* avatar)
 {
 	delete m_ScoreValue;
 	delete m_Lives;
@@ -53,10 +53,10 @@ void HUD::Update(const int score, const int lives, const Avatar& avatar)
 	if (lives < 10) zeroes = "0";
 	else zeroes = "";
 	m_Lives = { new Texture("=" + zeroes + std::to_string(lives), "zig.ttf", 18, Color4f{1.f,1.f,1.f,1.f} )};
-	m_SrcRect = Rectf{ avatar.GetCurrentPower() * 16.f, 0.f, 16.f, 16.f };
-	m_Health = avatar.GetHealth();
-	m_SpellGauge = avatar.GetMana();
-	m_Strength = avatar.GetStrength();
+	m_SrcRect = Rectf{ avatar->GetCurrentPower() * 16.f, 0.f, 16.f, 16.f };
+	m_Health = avatar->GetHealth();
+	m_SpellGauge = avatar->GetMana();
+	m_Strength = avatar->GetStrength();
 }
 
 void HUD::Draw() const

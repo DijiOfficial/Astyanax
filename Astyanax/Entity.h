@@ -17,11 +17,28 @@ public:
 		plant,
 		projectile,
 		miniBoss,
+		boss,
+		bossBody
+	};
+
+	const enum ActionState
+	{
+		spawning,
+		alive,
+		attacking,
+		jumping,
+		isHit,
+		dying,
+		dead,
+		idle,
+		slash,
+		deactivated
 	};
 
 	Entity(const Point2f& bottomLeft, const float width, const float horSpeed, const float speed, const int id, const int health, const Texture* texture, const EnemyType enemyType);
 	virtual ~Entity();
 	virtual void Draw() const = 0;
+
 	virtual void Update(float elapsedSec, Level*& level, const Rectf& avatar, SoundEffect* deathAudio) = 0;
 	virtual void Update(float elapsedSec);
 	bool IsOverlapping(const Rectf& rect) const;
@@ -39,19 +56,8 @@ public:
 	bool GetIsFrozen() const;
 	bool IsGoingLeft() const;
 	int GetEntityId() const;
-
-	const enum ActionState
-	{
-		spawning,
-		alive,
-		attacking,
-		jumping,
-		isHit,
-		dying,
-		dead,
-		idle,
-		deactivated
-	};
+	
+	virtual bool GetIsFirstPhaseOver() const { return false; };
 	virtual ActionState GetState() const = 0;
 
 	enum BombState
