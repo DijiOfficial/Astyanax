@@ -107,6 +107,7 @@ There is also a list of known bugs which I may or may not tackle:
 - Switching between Spells when Casting one may cause unwanted visual effects
 - During Invincibility Frames the avatar sprite can switche weapons
 - During Invincibility Frames the avatar with the Sword is cropped wrong when moving backwards on the X axis
+- Menu Triangle is gone after going to scoreboard back to menu
 
 There is also a lot of erronous and 'bad' code that could be replaced, which I will likely never do, but instead port the game to a new engine with proper code (OMG ASTYNAX v2.0 coming Soon?)
 
